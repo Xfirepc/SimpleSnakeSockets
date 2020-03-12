@@ -1,5 +1,4 @@
-
-
+from lib.config import *
 
 class Snake:
   def __init__(self):
