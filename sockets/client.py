@@ -1,11 +1,11 @@
-import sockets
+import socket
 import threading
 import sys
 import pickle
 
 
 class Client():
-    def __init__(self, host = 'localhost', port = 3000):
+    def __init__(self, host = "localhost", port = 4000):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.connect((str(host), int(port)))
 
@@ -15,26 +15,26 @@ class Client():
         msg_recv.start()
 
         while True:
-            msg = input('>>')
+            msg = input('')
             if msg != 'salir':
                 self.send_msg(msg)
-            else
+            else:
                 self.sock.close()
                 sys.exit()
 
-        # Funcion pendiente de los mensajes que se reciben
-        def msg_recv(self):
-            while True:
-                try:
-                    data = self.sock.recv(1024)
-                    if data:
-                        print(pickle.loads(data))
-                except:
-                    pass
+    # Funcion pendiente de los mensajes que se reciben
+    def msg_recv(self):
+        while True:
+            try:
+                data = self.sock.recv(1024)
+                if data:
+                    print(pickle.loads(data))
+            except:
+                pass
 
-        # Funcion que enviara los mensajes
-        def send_msg(self, msg):
-            self.sock.send(pickle.dumps(msg))
+    # Funcion que enviara los mensajes
+    def send_msg(self, msg):
+        self.sock.send(pickle.dumps( '(' + str(self.sock.getsockname()[1]) + '): ' + msg))
 
 
 client = Client()
