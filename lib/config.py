@@ -30,13 +30,11 @@ backgroud_color =  (0, 0, 26)
 snake_color = (181, 245, 31)
 stroke_color = (255, 255, 255)
 
+
 # This code is important to init pygame and set the screen size
 # Don't touch this content, your game will can crash
 pygame.init()
 screen = pygame.display.set_mode((SCREN_SIZE, SCREN_SIZE))
 pygame.display.set_caption('Snake')
-
-
-
 
 

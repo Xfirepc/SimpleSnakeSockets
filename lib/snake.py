@@ -5,7 +5,7 @@ class Snake:
     self.body = [(200, 200), (200+grid, 200), (200+grid*2, 200), (200+grid*3, 200)]
     self.skin = pygame.Surface((grid, grid))
     self.skin.fill(snake_color)
-    self.direction = LEFT
+    self.direction = 276
 
   def collisionApple(self):
     self.body.append((-100, -100))
@@ -14,13 +14,13 @@ class Snake:
     for i in range(len(self.body) - 1, 0, -1):
       self.body[i] = (self.body[i-1][0], self.body[i-1][1])
 
-    if self.direction == UP:  
+    if self.direction == 273:  
       self.body[0] = (self.body[0][0], self.body[0][1] - grid)
-    if self.direction == DOWN:
+    if self.direction == 274:
       self.body[0] = (self.body[0][0], self.body[0][1] + grid)
-    if self.direction == RIGHT:
+    if self.direction == 275:
       self.body[0] = (self.body[0][0] + grid, self.body[0][1])
-    if self.direction == LEFT:
+    if self.direction == 276:
       self.body[0] = (self.body[0][0] - grid, self.body[0][1])
 
   def collisionBody(self):
