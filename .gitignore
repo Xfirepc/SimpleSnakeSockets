@@ -1,2 +1,4 @@
 __pychache__
-lib
+.vscode/
+lib/__pycache__/
+lib/handlers/__pycache__/

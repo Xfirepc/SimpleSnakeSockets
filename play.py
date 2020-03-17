@@ -3,26 +3,24 @@ from lib.config import *
 from lib.snake import Snake
 from lib.apple import Apple
 from lib.borders import Borders
-from lib.handlers.client import Client
 
 snake = Snake()
 apple = Apple()
 borders = Borders()
 
-Player = Client()
 
 while True:
-    pygame.time.Clock().tick(10)
+    pygame.time.Clock().tick(15)
     screen.fill(stroke_color)
     
     for event in pygame.event.get():
         if event.type == KEYDOWN:
-            Player.sendData(event.key)
+            snake.client.state['player_direction'] = event.key
 
         if event.type == QUIT:
             pygame.quit()
 
-    snake.direction = Player.getDirection()
+    # snake.direction = snake.getState('player_direction')
     
     if(snake.collisionBorders() or snake.collisionBody()):
         pygame.quit()

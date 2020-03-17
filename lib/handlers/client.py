@@ -15,24 +15,27 @@ class Client():
         msg_recv.daemon = True
         msg_recv.start()
         
-        self.direction = 276
+        self.state =  {
+            'player_body': [],
+            'player_direction': 273,
+            'apples': [],
+            'enemies': []
+        }
+
 
     # Funcion pendiente de los mensajes que se reciben
     def recvData(self):
         while True:
             try:
-                data = self.sock.recv(8000)
+                data = self.sock.recv(1024)
                 if data:
-                    self.direction = pickle.loads(data)
+                    self.state = pickle.loads(data)
             except:
                 pass
 
     # Funcion que enviara los mensajes
-    def sendData(self, data):
-        self.sock.send(pickle.dumps(data))
-
-    def getDirection(self):
-        return self.direction
+    def sendStatus(self):
+        self.sock.send(pickle.dumps(self.state))
 
     def close(self):
         self.sock.close()
