@@ -7,10 +7,10 @@ from lib.borders import Borders
 snake = Snake()
 apple = Apple()
 borders = Borders()
-
+ 
 
 while True:
-    pygame.time.Clock().tick(15)
+    pygame.time.Clock().tick(3)
     screen.fill(stroke_color)
     
     for event in pygame.event.get():
@@ -19,8 +19,6 @@ while True:
 
         if event.type == QUIT:
             pygame.quit()
-
-    # snake.direction = snake.getState('player_direction')
     
     if(snake.collisionBorders() or snake.collisionBody()):
         pygame.quit()
@@ -30,8 +28,9 @@ while True:
         apple.setNewPosition()
         velocity = velocity + 1
     
-    borders.render()
     apple.render()
+    snake.renderEnemies()
+    borders.render()
     snake.render()
     
     snake.moveDirection()

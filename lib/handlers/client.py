@@ -22,7 +22,6 @@ class Client():
             'enemies': []
         }
 
-
     # Funcion pendiente de los mensajes que se reciben
     def recvData(self):
         while True:

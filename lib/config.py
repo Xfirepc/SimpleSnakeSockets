@@ -11,7 +11,7 @@ LEFT = 3
 # This vars define the size screen and the grid try change
 # whit numbers SCREEN_SIZE  = 800 and grid = 20
 SCREN_SIZE = 600
-grid = 20
+grid = 10
 
 # Collision function define the event if two elements have
 # the same position x and y

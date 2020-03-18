@@ -3,7 +3,7 @@ import threading
 import sys
 import pickle
 from pygame.locals import *
-grid = 20
+grid = 10
 
 class Server():
     def __init__(self, host="localhost", port=4000):
@@ -37,13 +37,10 @@ class Server():
             try:
                 conn, addr = self.sock.accept()
                 conn.setblocking(False)
-                self.clients.append(conn)
-                self.stateClients.append({
-                        'player_body': [],
-                        'player_direction': 273,
-                        'apples': [],
-                        'enemies': []
-                    })
+                self.clients.append({
+                    'client': conn,
+                    'data': {}
+                })
                 print("Se conecto un jugador: ", addr)
             except:
                 pass
@@ -52,18 +49,19 @@ class Server():
         print("ProcessarCon iniciado")
         while True:
             if len(self.clients) > 0:
-                for client in self.clients:
+                for c in self.clients:
                     try:
-                        data = client.recv(1024)
+                        data = c['client'].recv(1024)
                         if data:
-                            print("[Jugador]:", pickle.loads(data))
-                            self.stateClients[0] = pickle.loads(data)
-                            msg = self.setNewState(self.stateClients[0])
-                            self.responseToPlayer(msg, client)
-                    except:
+                            received =  pickle.loads(data)
+                            c['data'] = received
+                            print("[" + received['name'] + "]:", received)
+                            status = self.setNewState(received, c['client'])
+                            self.responseToPlayers(c['client'])
+                    except: 
                         pass
 
-    def setNewState(self, state):
+    def setNewState(self, state, client):
         body = state['player_body']
         direction = state['player_direction']
 
@@ -73,7 +71,7 @@ class Server():
         if direction == 273:  
             body[0] = (body[0][0], body[0][1] - grid)
         if direction == 274:
-            body[0] = (body[0][0], body[0][1] + grid)
+            body[0] = (body[0][0], body[0][1] +  grid)
         if direction == 275:
             body[0] = (body[0][0] + grid, body[0][1])
         if direction == 276:
@@ -81,19 +79,23 @@ class Server():
 
         state['player_body'] = body
         state['player_direction'] = direction
-
+        state['enemies'] = self.appendEnemies(client)
         return state
 
-    def responseToPlayer(self, data, client):
-        client.send(pickle.dumps(data))
-
-    def msg_to_all(self, msg, client):
-        for c in self.clients:
+    def responseToPlayers(self, client):
+         for sclient in self.clients:
             try:
-                if c != client:
-                    c.send(msg)
+                sclient['client'].send(pickle.dumps(sclient['data']))
             except:
-                self.clients.remove(c)
+                self.clients.remove(sclient)
+            
 
+    def appendEnemies(self, client):
+        enemies = []
+        for sclient in self.clients:
+            if (sclient['client'] != client):
+                enemies.append(sclient['data']['player_body'])
+        
+        return enemies
 
 Server()
