@@ -2,8 +2,8 @@ import socket
 import threading
 import sys
 import pickle
+from lib.config import *
 from pygame.locals import *
-grid = 10
 
 class Server():
     def __init__(self, host="localhost", port=4000):
@@ -53,7 +53,7 @@ class Server():
                     try:
                         data = c['client'].recv(1024)
                         if data:
-                            received =  pickle.loads(data)
+                            received = pickle.loads(data)
                             c['data'] = received
                             print("[" + received['name'] + "]:", received)
                             status = self.setNewState(received, c['client'])
@@ -71,7 +71,7 @@ class Server():
         if direction == 273:  
             body[0] = (body[0][0], body[0][1] - grid)
         if direction == 274:
-            body[0] = (body[0][0], body[0][1] +  grid)
+            body[0] = (body[0][0], body[0][1] + grid)
         if direction == 275:
             body[0] = (body[0][0] + grid, body[0][1])
         if direction == 276:
@@ -80,6 +80,7 @@ class Server():
         state['player_body'] = body
         state['player_direction'] = direction
         state['enemies'] = self.appendEnemies(client)
+        state['apples'] = self.getPositionApple();
         return state
 
     def responseToPlayers(self, client):
@@ -88,8 +89,26 @@ class Server():
                 sclient['client'].send(pickle.dumps(sclient['data']))
             except:
                 self.clients.remove(sclient)
-            
 
+    def getPositionApple(self):
+        some_one_ate = False
+        new_position = getRandomPosition()
+        for sclient in self.clients:
+            if sclient['data']['player_eat']:
+                sclient['data']['player_eat'] = False
+                some_one_ate = True
+
+        for sclient in self.clients:
+            if some_one_ate:
+                sclient['data']['apples'] = new_position
+            else:
+                if len(sclient['data']['apples']) > 0:
+                    return sclient['data']['apples']
+
+        if some_one_ate:
+            return new_position
+        return getRandomPosition()
+        
     def appendEnemies(self, client):
         enemies = []
         for sclient in self.clients:

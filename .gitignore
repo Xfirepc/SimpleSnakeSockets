@@ -1,4 +1,5 @@
 __pychache__
 .vscode/
+.idea/
 lib/__pycache__/
 lib/handlers/__pycache__/

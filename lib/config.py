@@ -38,3 +38,7 @@ screen = pygame.display.set_mode((SCREN_SIZE, SCREN_SIZE))
 pygame.display.set_caption('Snake')
 
 
+def getRandomPosition():
+  x = random.randint(grid, SCREN_SIZE - grid * 2)
+  y = random.randint(grid, SCREN_SIZE - grid * 2)
+  return (x // grid * grid, y // grid * grid)

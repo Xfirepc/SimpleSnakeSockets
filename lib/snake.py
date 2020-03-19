@@ -1,11 +1,11 @@
 from lib.config import *
 from lib.handlers.client import Client
-import random
+import random       
 
 class Snake:
     def __init__(self):
         self.enemy = pygame.Surface((grid, grid))
-        self.enemy.fill((204, 0, 153))
+        self.enemy.fill((0, 0, 255))
 
         self.skin = pygame.Surface((grid, grid))
         self.skin.fill(snake_color)
@@ -16,18 +16,17 @@ class Snake:
         self.client.state['name'] = 'name' + str(random.randint(0, 1000))
         self.client.state['player_body'] = self.body
         self.client.state['player_direction'] = self.direction
+        self.client.state['player_eat'] = False
         self.client.state['enemies'] = []
+        self.client.state['apples'] = []
 
     def moveDirection(self):
         state = self.loadState()
-        print(state)
         self.body = state['player_body']
         self.direction = state['player_direction']
 
-
     def collisionApple(self):
-        self.body.append((-100, -100))
-
+        self.client.state['player_body'].append((-100, -100))
 
     def collisionBody(self):
         for j in range(1, len(self.body)):

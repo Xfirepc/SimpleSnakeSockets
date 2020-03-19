@@ -5,14 +5,14 @@ from lib.apple import Apple
 from lib.borders import Borders
 
 snake = Snake()
-apple = Apple()
+apple = Apple(snake.client)
 borders = Borders()
  
 
 while True:
     pygame.time.Clock().tick(3)
     screen.fill(stroke_color)
-    
+
     for event in pygame.event.get():
         if event.type == KEYDOWN:
             snake.client.state['player_direction'] = event.key
@@ -23,15 +23,17 @@ while True:
     if(snake.collisionBorders() or snake.collisionBody()):
         pygame.quit()
 
+    apple.setNewPosition(snake.client.state['apples'])
     if (apple.collisionSnake(snake)):
+        snake.client.state['player_eat'] = True
         snake.collisionApple()
-        apple.setNewPosition()
+        apple.setNewPosition(snake.client.state['apples'])
         velocity = velocity + 1
-    
-    apple.render()
-    snake.renderEnemies()
+
     borders.render()
+    snake.renderEnemies()
     snake.render()
+    apple.render()
     
     snake.moveDirection()
     pygame.display.update()
