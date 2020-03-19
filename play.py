@@ -10,7 +10,7 @@ borders = Borders()
  
 
 while True:
-    pygame.time.Clock().tick(3)
+    pygame.time.Clock().tick(5)
     screen.fill(stroke_color)
 
     for event in pygame.event.get():
@@ -31,10 +31,9 @@ while True:
         velocity = velocity + 1
 
     borders.render()
+    apple.render()
     snake.renderEnemies()
     snake.render()
-    apple.render()
-    
     snake.moveDirection()
     pygame.display.update()
 
