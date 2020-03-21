@@ -3,6 +3,7 @@ from pygame.locals import *
 
 
 # This constants define player controls not change
+ENTER = 13
 UP = 273
 RIGHT = 275
 DOWN = 274

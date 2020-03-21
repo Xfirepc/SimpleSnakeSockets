@@ -3,3 +3,5 @@ __pychache__
 .idea/
 lib/__pycache__/
 lib/handlers/__pycache__/
+lib/gui/__pycache__/
+**/__pycahche/
