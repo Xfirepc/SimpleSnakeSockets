@@ -6,5 +6,5 @@ class Borders:
     self.skin = pygame.Surface((SCREN_SIZE - grid*2, SCREN_SIZE - grid*2))
     self.skin.fill(backgroud_color)
 
-  def render(self):
+  def render(self, screen):
     screen.blit(self.skin, self.position)

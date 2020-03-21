@@ -14,11 +14,18 @@ class Snake:
 
         self.client = Client()
         self.client.state['name'] = 'name' + str(random.randint(0, 1000))
-        self.client.state['player_body'] = self.body
         self.client.state['player_direction'] = self.direction
+        self.client.state['last_direction'] = 275
+        self.client.state['player_body'] = self.body
         self.client.state['player_eat'] = False
         self.client.state['enemies'] = []
         self.client.state['apples'] = []
+
+    def setProp(self, key, value):
+        self.client.state[key] = value
+
+    def getProp(self, key):
+        return self.client.state[key]
 
     def moveDirection(self):
         state = self.loadState()
@@ -47,11 +54,11 @@ class Snake:
             return self.client.state[key]
         return self.client.state
 
-    def renderEnemies(self):
+    def renderEnemies(self, screen):
         for enemy in self.client.state['enemies']:
             for pos in enemy:
                 screen.blit(self.enemy, pos)
 
-    def render(self):
+    def render(self, screen):
         for pos in self.body:
             screen.blit(self.skin, pos)

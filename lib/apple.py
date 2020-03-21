@@ -16,6 +16,6 @@ class Apple:
   def setNewPosition(self, position):
     self.position = position
 
-  def render(self):
+  def render(self, screen):
     if len(self.position) > 0:
       screen.blit(self.skin, self.position)
