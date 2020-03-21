@@ -7,6 +7,7 @@ class Snake:
         self.enemy = pygame.Surface((grid, grid))
         self.enemy.fill((0, 0, 255))
 
+        self.score = 0
         self.skin = pygame.Surface((grid, grid))
         self.skin.fill(snake_color)
         self.body = [(200, 200), (200+grid, 200), (200+grid*2, 200), (200+grid*3, 200)]
@@ -33,6 +34,7 @@ class Snake:
         self.direction = state['player_direction']
 
     def collisionApple(self):
+        self.score = self.score + 1
         self.client.state['player_body'].append((-100, -100))
 
     def collisionBody(self):

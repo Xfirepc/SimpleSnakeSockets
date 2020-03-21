@@ -8,21 +8,30 @@ from lib.borders import Borders
 # This code is important to init pygame and set the screen size
 # Don't touch this content, your game will can crash
 pygame.init()
+pygame.font.init()
 screen = pygame.display.set_mode((SCREN_SIZE, SCREN_SIZE))
 pygame.display.set_caption('Snake multi-player sockets')
 
+
+def renderText(text):
+    myfont = pygame.font.SysFont('Arial', 15)
+    surface = myfont.render(text, True, apple_color)
+    return surface
+
+
 def initScreenLog():
-    image = pygame.image.load(r'images/logo.png')
+    image = pygame.image.load(r'images/logo.pnggit g')
     text_input = Input.TextInput("Enter nickname")
+
     while True:
         screen.fill((76, 116, 4))
         events = pygame.event.get()
-        for event in events:
-            if event.type == KEYDOWN:
-                if event.key == ENTER:
-                    return text_input
+        for e in events:
+            if e.type == KEYDOWN:
+                if e.key == ENTER:
+                    return text_input.get_text()
 
-            if event.type == pygame.QUIT:
+            if e.type == pygame.QUIT:
                 exit()
 
         text_input.update(events)
@@ -41,8 +50,9 @@ while True:
     if not player:
         player = initScreenLog()
 
-    pygame.time.Clock().tick(2)
+    pygame.time.Clock().tick(10)
     direction = snake.getProp('player_direction')
+    snake.setProp('name', player)
 
     for event in pygame.event.get():
         if event.type == KEYDOWN:
@@ -64,11 +74,13 @@ while True:
         snake.collisionApple()
         apple.setNewPosition(snake.getProp('apples'))
 
+    player_score = renderText(player + ': ' + str(snake.score))
     screen.fill(stroke_color)
     borders.render(screen)
     apple.render(screen)
     snake.renderEnemies(screen)
     snake.render(screen)
     snake.moveDirection()
+    screen.blit(player_score, (10, 10))
     pygame.display.update()
 
