@@ -14,14 +14,14 @@ class Server():
 
         self.clients = []
         self.stateClients = []
-        aceptar = threading.Thread(target=self.aceptarCon)
-        processar = threading.Thread(target=self.processarCon)
+        accept = threading.Thread(target=self.aceptarCon)
+        process = threading.Thread(target=self.processarCon)
 
-        aceptar.daemon = True
-        aceptar.start()
+        accept.daemon = True
+        accept.start()
 
-        processar.daemon = True
-        processar.start()
+        process.daemon = True
+        process.start()
 
         while True:
             msg = input('')
@@ -112,8 +112,12 @@ class Server():
     def appendEnemies(self, client):
         enemies = []
         for sclient in self.clients:
-            if (sclient['client'] != client):
-                enemies.append(sclient['data']['player_body'])
+            if sclient['client'] != client:
+                enemies.append({
+                    'body': sclient['data']['player_body'],
+                    'name': sclient['data']['name'],
+                    'score': sclient['data']['score']
+                })
         
         return enemies
 

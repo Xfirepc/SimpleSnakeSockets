@@ -1,9 +1,10 @@
-
+import sys
 from lib.config import *
-import lib.gui.pygame_textinput as Input
 from lib.snake import Snake
 from lib.apple import Apple
 from lib.borders import Borders
+import lib.gui.pygame_textinput as Input
+from lib.gui.render_text import renderText
 
 # This code is important to init pygame and set the screen size
 # Don't touch this content, your game will can crash
@@ -12,12 +13,6 @@ pygame.font.init()
 screen = pygame.display.set_mode((SCREN_SIZE, SCREN_SIZE))
 pygame.display.set_caption('Snake multi-player sockets')
 clock = pygame.time.Clock()
-
-
-def renderText(text):
-    my_font = pygame.font.Font('lib/gui/maincra.ttf', 20)
-    surface = my_font.render(text, True, apple_color)
-    return surface
 
 
 def initScreenLog():
@@ -62,47 +57,55 @@ def confirmButton():
         clock.tick(30)
 
 
-snake = Snake()
-apple = Apple(snake.client)
-borders = Borders()
-player = None
+def run_game(player, server):
+    snake = Snake(server)
+    apple = Apple(snake.client)
+    borders = Borders()
 
-while True:
-    if not player:
-        player = initScreenLog()
+    while True:
+        clock.tick(TIMER)
+        direction = snake.getProp('player_direction')
+        snake.setProp('name', player)
 
-    pygame.time.Clock().tick(10)
-    direction = snake.getProp('player_direction')
-    snake.setProp('name', player)
+        for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                if (event.key == UP and direction != DOWN) or (event.key == DOWN and direction != UP):
+                    snake.setProp('player_direction', event.key)
+                if (event.key == LEFT and direction != RIGHT) or (event.key == RIGHT and direction != LEFT):
+                    snake.setProp('player_direction', event.key)
 
-    for event in pygame.event.get():
-        if event.type == KEYDOWN:
-            if (event.key == UP and direction != DOWN) or (event.key == DOWN and direction != UP):
-                snake.setProp('player_direction', event.key)
-            if (event.key == LEFT and direction != RIGHT) or (event.key == RIGHT and direction != LEFT):
-                snake.setProp('player_direction', event.key)
+            if event.type == QUIT:
+                pygame.quit()
 
-        if event.type == QUIT:
-            pygame.quit()
+        if snake.collisionBorders() or snake.collisionBody():
+            snake.setProp('body', [])
+            if confirmButton():
+                snake.initState()
 
-    if snake.collisionBorders() or snake.collisionBody():
-        if confirmButton():
-            snake.initState()
-
-    apple.setNewPosition(snake.getProp('apples'))
-
-    if apple.collisionSnake(snake):
-        snake.setProp('player_eat', True)
-        snake.collisionApple()
         apple.setNewPosition(snake.getProp('apples'))
 
-    player_score = renderText((player + ': ' + str(snake.score)).upper())
-    screen.fill(stroke_color)
-    borders.render(screen)
-    apple.render(screen)
-    snake.renderEnemies(screen)
-    snake.render(screen)
-    snake.moveDirection()
-    screen.blit(player_score, (15, 15))
-    pygame.display.update()
+        if apple.collisionSnake(snake):
+            snake.setProp('player_eat', True)
+            snake.collisionApple()
+            apple.setNewPosition(snake.getProp('apples'))
+
+        screen.fill(stroke_color)
+        borders.render(screen)
+        apple.render(screen)
+        snake.renderEnemies(screen)
+        snake.render(screen)
+        snake.moveDirection()
+        pygame.display.update()
+
+
+def main():
+    player = initScreenLog()
+    server = sys.argv[1] if len(sys.argv) > 1 else 'localhost'
+    run_game(player, server)
+
+
+if __name__ == '__main__':
+    main()
+
+
 
