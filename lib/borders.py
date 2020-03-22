@@ -1,5 +1,6 @@
 from lib.config import *
 
+
 class Borders:
   def __init__(self):
     self.position = (grid, grid)

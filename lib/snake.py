@@ -4,6 +4,7 @@ import random
 
 initial_body = [(200, 200), (200 + grid, 200), (200 + grid * 2, 200), (200 + grid * 3, 200)]
 
+
 class Snake:
     def __init__(self):
         self.client = Client()
@@ -51,7 +52,8 @@ class Snake:
         return False
 
     def collisionBorders(self):
-        if self.body[0][0] < 10 or self.body[0][0] > SCREN_SIZE - grid*2 or self.body[0][1] < 10 or self.body[0][1] > SCREN_SIZE - grid*2:
+        if self.body[0][0] < 10 or self.body[0][0] > SCREN_SIZE - grid*2 \
+                or self.body[0][1] < 10 or self.body[0][1] > SCREN_SIZE - grid*2:
             self.client.state['player_body'] = []
             return True
         return False

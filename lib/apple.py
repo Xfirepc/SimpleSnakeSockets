@@ -1,5 +1,6 @@
 from lib.config import *
 
+
 class Apple:
   def __init__(self, client):
     self.client = client
