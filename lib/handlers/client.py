@@ -11,7 +11,7 @@ class Client():
         self.sock.connect((str(host), int(port)))
 
         # Hilo que recibe los mensajes
-        msg_recv = threading.Thread(target = self.recvData)
+        msg_recv = threading.Thread(target=self.recvData)
         msg_recv.daemon = True
         msg_recv.start()
         

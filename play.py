@@ -11,16 +11,17 @@ pygame.init()
 pygame.font.init()
 screen = pygame.display.set_mode((SCREN_SIZE, SCREN_SIZE))
 pygame.display.set_caption('Snake multi-player sockets')
+clock = pygame.time.Clock()
 
 
 def renderText(text):
-    myfont = pygame.font.SysFont('Arial', 15)
-    surface = myfont.render(text, True, apple_color)
+    my_font = pygame.font.Font('lib/gui/maincra.ttf', 20)
+    surface = my_font.render(text, True, apple_color)
     return surface
 
 
 def initScreenLog():
-    image = pygame.image.load(r'images/logo.pnggit g')
+    image = pygame.image.load(r'images/logo.png')
     text_input = Input.TextInput("Enter nickname")
 
     while True:
@@ -38,7 +39,27 @@ def initScreenLog():
         screen.blit(image, (0, 0))
         screen.blit(text_input.get_surface(), (220, SCREN_SIZE - 50))
         pygame.display.update()
-        pygame.time.Clock().tick(30)
+        clock.tick(30)
+
+
+def confirmButton():
+    button = pygame.Rect(210, 470, 200, 30)  # creates a rect object
+    image = pygame.image.load(r'images/end.png')
+    while True:
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                return False
+
+            if e.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = e.pos  # gets mouse position
+
+                # checks if mouse position is over the button
+                if button.collidepoint(mouse_pos):
+                    return True
+
+        screen.blit(image, (0, 0))
+        pygame.display.update()
+        clock.tick(30)
 
 
 snake = Snake()
@@ -65,7 +86,8 @@ while True:
             pygame.quit()
 
     if snake.collisionBorders() or snake.collisionBody():
-        pygame.quit()
+        if confirmButton():
+            snake.initState()
 
     apple.setNewPosition(snake.getProp('apples'))
 
@@ -74,13 +96,13 @@ while True:
         snake.collisionApple()
         apple.setNewPosition(snake.getProp('apples'))
 
-    player_score = renderText(player + ': ' + str(snake.score))
+    player_score = renderText((player + ': ' + str(snake.score)).upper())
     screen.fill(stroke_color)
     borders.render(screen)
     apple.render(screen)
     snake.renderEnemies(screen)
     snake.render(screen)
     snake.moveDirection()
-    screen.blit(player_score, (10, 10))
+    screen.blit(player_score, (15, 15))
     pygame.display.update()
 
