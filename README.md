@@ -34,7 +34,7 @@ py -m pip install -r requirements.txt
 
 **Play**
 
-First, you need run server with.
+First, you need run server.
 
 ```shell
 py server.py 127.0.0.1
@@ -50,4 +50,4 @@ py play.py 127.0.0.1
 python3 play.py localhost
 
 ```
-The argv passed is the server ip by defaul use localhost but you can pass other ip in the ```py play.py 192.168.0.100``` 
+The args passed is the server ip by default use localhost,you can pass other ip as the examplee ```py play.py 192.168.0.100``` 
