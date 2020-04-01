@@ -2,7 +2,7 @@
 
 **Requirements**
 
-You need install this libraries to use.
+You need install this libraries to play.
 
 - [Pip](https://pypi.org/)
 - [Pygame](https://github.com/pygame/pygame)
@@ -15,7 +15,7 @@ This modules are installed on python3
 
 
 
-** Install **
+**Install**
 
 Install pygame by console.
 
@@ -31,25 +31,10 @@ py -m pip install -r requirements.txt
 
 ```
 
-** Install **
 
-Install pygame by console.
+**Play**
 
-```shell
-git clone https://github.com/Xfirepc/SimpleSnakeSockets
-cd SimpleSnakeSockets
-
-# For linux
-pip install -r requirements.txt
-
-# For windows
-py -m pip install -r requirements.txt
-
-```
-
-** Play **
-
-You need run server with
+First, you need run server with.
 
 ```shell
 py server.py 127.0.0.1
@@ -57,7 +42,7 @@ py server.py 127.0.0.1
 python3 server.py localhost
 
 ```
-Run the game and play
+Run game and play
 
 ```shell
 py play.py 127.0.0.1
