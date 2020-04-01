@@ -50,4 +50,4 @@ py play.py 127.0.0.1
 python3 play.py localhost
 
 ```
-The args passed is the server ip by default use localhost,you can pass other ip as the examplee ```py play.py 192.168.0.100``` 
+The args passed is the server ip by default use localhost,you can pass other ip as the example ```py play.py 192.168.0.100``` 
