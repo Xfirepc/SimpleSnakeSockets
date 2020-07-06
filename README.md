@@ -23,14 +23,13 @@ Install pygame by console.
 git clone https://github.com/Xfirepc/SimpleSnakeSockets
 cd SimpleSnakeSockets
 
-# For linux
-pip install -r requirements.txt
 
-# For windows
 py -m pip install -r requirements.txt
+# Or
+python3 -m pip install -r requirements.txt
+
 
 ```
-
 
 **Play**
 
