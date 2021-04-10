@@ -6,7 +6,7 @@ from lib.config import *
 from pygame.locals import *
 
 class Server():
-    def __init__(self, host="localhost", port=8080):
+    def __init__(self, host="0.0.0.0", port=8080):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.bind((str(host), int(port)))
         self.sock.listen(10)
