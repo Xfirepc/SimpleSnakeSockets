@@ -16,7 +16,7 @@ class Client:
         
         self.state =  {
             'player_body': [],
-            'player_direction': 273,
+            'player_direction': 119,
             'apples': [],
             'enemies': []
         }

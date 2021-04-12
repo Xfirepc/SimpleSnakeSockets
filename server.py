@@ -68,11 +68,11 @@ class Server():
         for i in range(len(body) - 1, 0, -1):
             body[i] = (body[i-1][0], body[i-1][1])
 
-        if direction == 273:
+        if direction == 119:
             body[0] = (body[0][0], body[0][1] - grid)
-        if direction == 274:
+        if direction == 115:
             body[0] = (body[0][0], body[0][1] + grid)
-        if direction == 275:
+        if direction == 100:
             body[0] = (body[0][0] + grid, body[0][1])
         if direction == 276:
             body[0] = (body[0][0] - grid, body[0][1])

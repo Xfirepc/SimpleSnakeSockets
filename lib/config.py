@@ -4,10 +4,19 @@ from pygame.locals import *
 
 # This constants define player controls not change
 ENTER = 13
-UP = 273
-RIGHT = 275
-DOWN = 274
+UP = 119
+RIGHT = 100
+DOWN = 115
 LEFT = 276
+
+
+
+
+# UP = 119
+# RIGHT = 100
+# DOWN = 115
+# LEFT= 97
+
 
 # This vars define the size screen and the grid try change
 # whit numbers SCREEN_SIZE  = 800 and grid = 20

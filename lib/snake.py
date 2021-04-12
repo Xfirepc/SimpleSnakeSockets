@@ -27,7 +27,7 @@ class Snake:
         self.client.state['enemies'] = []
         self.client.state['score'] = self.score
         self.client.state['player_eat'] = False
-        self.client.state['last_direction'] = 275
+        self.client.state['last_direction'] = 100
         self.client.state['player_body'] = self.body
         self.client.state['player_direction'] = self.direction
 
